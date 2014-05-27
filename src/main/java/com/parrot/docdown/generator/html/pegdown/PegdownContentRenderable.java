@@ -93,7 +93,7 @@ public class PegdownContentRenderable extends MarkupContentRenderable {
                 DocReferenceable ref = generator.getRefLocator().find(url, pegdownDoc.getSourcePosition(),
                         pegdownDoc.getContainer());
                 if (ref != null) {
-                    return new Rendering(page.getReferenceTo(ref), text);
+                    return new Rendering(page.getReferenceTo(ref), text!=null?text:ref.getName());
                 }
                 return new Rendering("#", "MISSING REF: " + url).withAttribute("class", "error");
             }

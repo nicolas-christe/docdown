@@ -43,7 +43,7 @@ public class MarkupPage implements IDocPage, DocReferenceable {
 
     @Override
     public String getTitle() {
-        return markupDoc.getName();
+        return markupDoc.getTitle();
     }
 
     public MarkupDoc getMarkupDoc() {
@@ -62,7 +62,7 @@ public class MarkupPage implements IDocPage, DocReferenceable {
 
     @Override
     public String getName() {
-        return markupDoc.getName();
+        return getTitle();
     }
 
     @Override

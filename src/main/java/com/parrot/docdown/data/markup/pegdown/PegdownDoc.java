@@ -38,6 +38,7 @@ import java.nio.file.Path;
 public class PegdownDoc extends MarkupDoc {
 
     private RootNode rootNode;
+    private String title;
 
     public PegdownDoc(Path sourceFilePath) {
         super(sourceFilePath);
@@ -63,20 +64,20 @@ public class PegdownDoc extends MarkupDoc {
         Parser parser = Parboiled.createParser(Parser.class, Extensions.FENCED_CODE_BLOCKS | Extensions.WIKILINKS,
                 1000L, Parser.DefaultParseRunnerProvider, PegDownPlugins.builder().build());
         rootNode = parser.parse(sb.toString().toCharArray());
+        loadTitle();
     }
 
-    @Override
-    public String loadTitle() {
+    private void loadTitle() {
         rootNode.accept(new CollectTextVisitor() {
             @Override
             public void visit(HeaderNode node) {
                 printer = new Printer();
                 visit((SuperNode) node);
+                title = printer.getString();
                 printer = null;
                 exit = true;
             }
         });
-        return null;
     }
 
     @Override
@@ -99,7 +100,11 @@ public class PegdownDoc extends MarkupDoc {
         });
     }
 
+    @Override
+    public String getTitle() {return title;};
+
     public RootNode getRootNode() {
         return rootNode;
     }
+
 }

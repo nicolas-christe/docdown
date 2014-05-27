@@ -37,9 +37,9 @@ public abstract class MarkupDoc extends BaseDoc {
 
     public abstract void processMarkup() throws IOException;
 
-    public abstract String loadTitle();
-
     public abstract void loadIndex(IReferenceProcessor processor);
+
+    public abstract String getTitle();
 
     /**
      * Build the doc name from the source file name without extension
