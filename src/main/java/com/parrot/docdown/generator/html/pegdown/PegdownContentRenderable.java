@@ -79,16 +79,6 @@ public class PegdownContentRenderable extends MarkupContentRenderable {
                 return getRendering(node.getText(), null);
             }
 
-            @Override
-            public Rendering render(ExpImageNode node, String text) {
-                return getRendering(node.url, text);
-            }
-
-            @Override
-            public Rendering render(RefImageNode node, String url, String title, String alt) {
-                return getRendering(url, title);
-            }
-
             private Rendering getRendering(String url, String text) {
                 DocReferenceable ref = generator.getRefLocator().find(url, pegdownDoc.getSourcePosition(),
                         pegdownDoc.getContainer());
