@@ -50,6 +50,10 @@ sourceSets {
         compileClasspath += configurations.provided
     }
 
+    test {
+        compileClasspath += configurations.provided
+    }
+
     // add sourceset for sample code included in the documentation
     sample {
     }
@@ -62,5 +66,41 @@ jar {
     exclude "META-INF/*.SF"
     exclude "META-INF/*.DSA"
     exclude "META-INF/*.RSA"
+    // don't put version name to output jar
+    version null
 }
+
+// Eating our own dog food !
+task javadoc(type:JavaExec, dependsOn:classes, overwrite:true) {
+    main = "com.parrot.docdown.Docdown"
+    classpath = sourceSets.main.runtimeClasspath + sourceSets.test.runtimeClasspath + configurations.provided
+}
+
+task dist(dependsOn:[jar,javadoc]) << {
+    task (zipjavadoc, type: Zip) {
+        from 'build/docdown'
+        appendix 'doc'
+        destinationDir file("build/dist")
+    }.execute()
+    task(ziparchive, type:Zip) {
+        from jar.archivePath
+        from (".") {
+            include 'LICENSE'
+            include 'NOTICE'
+        }
+        destinationDir file("build/dist")
+    }.execute()
+}
+
+task release(dependsOn:dist) << {
+    task (copyzip, type:Copy) {
+        from 'build/dist'
+        into docdownReleaseDir + '/releases/docdown'
+    }.execute()
+    task (copyjavadoc, type:Copy) {
+        from 'build/docdown'
+        into docdownReleaseDir + '/docdown'
+    }.execute()
+}
+
 
