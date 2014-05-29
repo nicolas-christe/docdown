@@ -61,8 +61,15 @@ public class PegdownDoc extends MarkupDoc {
         }
 
         // parse it
+        /*
+        PegDownPlugins.Builder pluginBuilder = PegDownPlugins.builder();
         Parser parser = Parboiled.createParser(Parser.class, Extensions.FENCED_CODE_BLOCKS | Extensions.WIKILINKS,
-                1000L, Parser.DefaultParseRunnerProvider, PegDownPlugins.builder().build());
+                1000L, Parser.DefaultParseRunnerProvider, pluginBuilder.build());
+        */
+
+        Parser parser = Parboiled.createParser(Parser.class, Extensions.FENCED_CODE_BLOCKS | Extensions.WIKILINKS,
+                1000L, Parser.DefaultParseRunnerProvider, PegDownPlugins.builder().withPlugin(PluginParser.class)
+                        .build());
         rootNode = parser.parse(sb.toString().toCharArray());
         loadTitle();
     }
@@ -101,7 +108,11 @@ public class PegdownDoc extends MarkupDoc {
     }
 
     @Override
-    public String getTitle() {return title;};
+    public String getTitle() {
+        return title;
+    }
+
+    ;
 
     public RootNode getRootNode() {
         return rootNode;

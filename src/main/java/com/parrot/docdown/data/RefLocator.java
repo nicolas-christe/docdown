@@ -19,6 +19,7 @@
 package com.parrot.docdown.data;
 
 import com.parrot.docdown.DocdownDoclet;
+import com.parrot.docdown.data.markup.IncludedCodeDoc;
 import com.parrot.docdown.data.markup.MarkupDoc;
 import com.parrot.docdown.data.markup.ResourceDoc;
 import com.parrot.docdown.data.markup.RootProjectDoc;
@@ -113,6 +114,44 @@ public class RefLocator extends RefProvider {
         } else if (matches.size() == 0) {
             // not found
             DocdownDoclet.getErrorReporter().printWarning(sourcePosition, "Can't find reference " + name);
+        }
+        return null;
+    }
+
+    public String[] findIncludedCode(String name, String id, SourcePosition sourcePosition) {
+        if (name.startsWith("/")) {
+            IncludedCodeDoc doc = projectRootDoc.getIncludedCodeDoc(name);
+            if (doc != null) {
+                return doc.getContent(id);
+            }
+            DocdownDoclet.getErrorReporter().printWarning(sourcePosition, "Can't find included code " + name);
+        } else {
+            List<IncludedCodeDoc> docs = new ArrayList<>();
+            for (IncludedCodeDoc codeDoc : projectRootDoc.getIncludedCodeDocs()) {
+                if (name.equals(codeDoc.getName())) {
+                    docs.add(codeDoc);
+                }
+            }
+            if (docs.size()==1) {
+                String[] result =  docs.get(0).getContent(id);
+                if (result==null) {
+                    DocdownDoclet.getErrorReporter().printWarning(sourcePosition, "Can't find included code " + name
+                            + (id!=null?":"+id:""));
+                }
+                return result;
+            } else if (docs.isEmpty()) {
+                DocdownDoclet.getErrorReporter().printWarning(sourcePosition, "Can't find included code " + name
+                        + (id!=null?":"+id:""));
+            } else {
+                StringBuilder error = new StringBuilder();
+                error.append("Ambiguous reference ").append(name).append(":\n");
+                for (IncludedCodeDoc match : docs) {
+                    error.append("\t");
+                    error.append(match.getQualifiedName());
+                    error.append("\n");
+                }
+                DocdownDoclet.getErrorReporter().printWarning(sourcePosition, error.toString());
+            }
         }
         return null;
     }

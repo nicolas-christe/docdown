@@ -76,7 +76,7 @@ public class LocalRefProvider implements IRefProvider {
 
     @Override
     public DocReferenceable getMarkupDocRef(MarkupDoc markupDoc) {
-        // if the document is null, it's a ref to the main package list
+        // if the document is null, it's a ref to the main package list (the pseudo javadoc/ link)
         if (markupDoc == null) {
             return docPageStore.getPackageListPage();
         }

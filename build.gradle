@@ -49,6 +49,10 @@ sourceSets {
         // add provided configuration to the compile classpath
         compileClasspath += configurations.provided
     }
+
+    // add sourceset for sample code included in the documentation
+    sample {
+    }
  }
 
 jar {

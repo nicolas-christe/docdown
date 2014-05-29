@@ -4,6 +4,7 @@
 [Emphasis](emphasis.md)
 [Lists](lists.md)
 [Code](code.md)
+[Sample Code](samples.md)
 
 
 # Markdown reference
@@ -13,5 +14,6 @@ This is intended as a quick reference and showcase. For more complete info, see
 [Github-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
 
 
-Section [[links]] specify how to link javadoc elements.
+Section [[links]] specify how to link javadoc elements. Section [[samples]] specify how to 
+include external sample code in markdown files.
 

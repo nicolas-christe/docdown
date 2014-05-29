@@ -38,6 +38,7 @@ public class DocdownOption {
 
     private String title;
     private List<Path> projectDocSrcDirs;
+    private List<Path> includeCodeDirs;
     private Path outputDir;
     private List<IRefProvider> externalRefProviders = new ArrayList<>();
 
@@ -54,6 +55,8 @@ public class DocdownOption {
             case "-d":
                 return 2;
             case "-docsourcepath":
+                return 2;
+            case "-includepath":
                 return 2;
             case "-link":
                 return 2;
@@ -86,6 +89,9 @@ public class DocdownOption {
                     break;
                 case "-docsourcepath":
                     valid = setDocSourcePaths(option[1], reporter);
+                    break;
+                case "-includepath":
+                    valid = setIncludeCodePaths(option[1], reporter);
                     break;
                 case "-link":
                     valid = addLinkProvider(option[1], reporter);
@@ -129,12 +135,20 @@ public class DocdownOption {
         return true;
     }
 
-    private boolean setDocSourcePaths(String sourcePaths, DocErrorReporter reporter) {
+    private boolean setDocSourcePaths(String paths, DocErrorReporter reporter) {
         projectDocSrcDirs = new ArrayList<>();
-        for (String sourcePath : sourcePaths.split(File.pathSeparator)) {
-            projectDocSrcDirs.add(Paths.get(sourcePath));
+        for (String path : paths.split(File.pathSeparator)) {
+            projectDocSrcDirs.add(Paths.get(path));
         }
         return projectDocSrcDirs.size() > 0;
+    }
+
+    private boolean setIncludeCodePaths(String paths, DocErrorReporter reporter) {
+        includeCodeDirs = new ArrayList<>();
+        for (String path : paths.split(File.pathSeparator)) {
+            includeCodeDirs.add(Paths.get(paths));
+        }
+        return includeCodeDirs.size() > 0;
     }
 
     private boolean addLinkProvider(String url, DocErrorReporter reporter) {
@@ -162,7 +176,8 @@ public class DocdownOption {
         System.out.println("Doclet options:");
         System.out.println("-t <title>                  Documentation title");
         System.out.println("-d <directory>              Destination directory for output files");
-        System.out.println("-docsourcepath <pathlist>   Specify where to find project documentation source files");
+        System.out.println("-docsourcepath <pathlist>   Where to find project documentation source files");
+        System.out.println("-includepath <pathlist>     Where to find included code blocks");
         System.out.println("-link <url>                 Create links to javadoc at <url>");
         System.out.println("-linkoffline <url> <url2>   Link to docs at <url> using package list at <url2>");
     }
@@ -173,6 +188,10 @@ public class DocdownOption {
 
     public Collection<Path> getSrcDirs() {
         return projectDocSrcDirs;
+    }
+
+    public Collection<Path> getIncludeDirs() {
+        return includeCodeDirs;
     }
 
     public Collection<IRefProvider> getExternalRefProviders() {

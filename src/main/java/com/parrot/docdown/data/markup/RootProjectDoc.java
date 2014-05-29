@@ -34,13 +34,27 @@ import java.util.Map;
 public class RootProjectDoc {
 
     public static class Builder {
+        /**
+         * index.md files, by qualified name
+         */
         private final Map<String, IndexDoc> indexDocs;
+        /**
+         * markup doc files, by qualified name
+         */
         private final Map<String, MarkupDoc> markupDocs;
+        /**
+         * code source file that can be included as a code block, by qualified name
+         */
+        private final Map<String, IncludedCodeDoc> includedCodeDocs;
+        /**
+         * other resources files (images), by qualified name
+         */
         private final Map<String, ResourceDoc> resourceDocs;
 
         public Builder() {
             this.indexDocs = new HashMap<>();
             this.markupDocs = new HashMap<>();
+            this.includedCodeDocs = new HashMap<>();
             this.resourceDocs = new HashMap<>();
         }
 
@@ -52,19 +66,26 @@ public class RootProjectDoc {
             return markupDocs;
         }
 
+        public Map<String, IncludedCodeDoc> getIncludedCodeDocs() {
+            return includedCodeDocs;
+        }
+
         public Map<String, ResourceDoc> getResourceDocs() {
             return resourceDocs;
         }
 
-        private void build(Collection<Path> srcDirs) throws IOException {
-            loadFileLists(srcDirs);
+        private void build(Collection<Path> docSourceDir, Collection<Path> includedCodeSourceDir) throws IOException {
+            loadSourceFileLists(docSourceDir);
+            if (includedCodeSourceDir != null) {
+                loadIncludedCodeFileLists(includedCodeSourceDir);
+            }
             if (markupDocs.get(null) != null) {
                 processMarkupFiles();
                 loadIndexes();
             }
         }
 
-        private void loadFileLists(Collection<Path> srcDirs) throws IOException {
+        private void loadSourceFileLists(Collection<Path> srcDirs) throws IOException {
             // build a list of all .md files in source paths
             for (Path sourcePath : srcDirs) {
                 if (Files.exists(sourcePath)) {
@@ -93,6 +114,33 @@ public class RootProjectDoc {
                                     ResourceDoc resourceDoc = new ResourceDoc(path);
                                     resourceDocs.put(resourceDoc.getQualifiedName(), resourceDoc);
                                 }
+                            }
+                            return FileVisitResult.CONTINUE;
+                        }
+                    });
+                }
+            }
+        }
+
+        private void loadIncludedCodeFileLists(Collection<Path> srcDirs) throws IOException {
+            // build a list of allfiles  in included source code paths
+            for (Path sourcePath : srcDirs) {
+                if (Files.exists(sourcePath)) {
+                    Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
+                        @Override
+                        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws
+                                IOException {
+                            DocdownDoclet.getErrorReporter().printNotice("Loading samples files of " + dir + "...");
+                            return super.preVisitDirectory(dir, attrs);
+                        }
+
+                        @Override
+                        public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                            // skip all hiddenList<Path> files
+                            if (!Files.isHidden(path)) {
+                                IncludedCodeDoc doc = new IncludedCodeDoc(path);
+                                includedCodeDocs.put(doc.getQualifiedName(), doc);
+
                             }
                             return FileVisitResult.CONTINUE;
                         }
@@ -163,13 +211,16 @@ public class RootProjectDoc {
 
     private final Map<String, IndexDoc> indexDocs;
     private final Map<String, MarkupDoc> markupDocs;
+    private final Map<String, IncludedCodeDoc> includedCodeDocs;
     private final Map<String, ResourceDoc> resourceDocs;
 
 
-    public RootProjectDoc(Builder builder, Collection<Path> srcDirs) throws IOException {
-        builder.build(srcDirs);
+    public RootProjectDoc(Builder builder, Collection<Path> docSourceDirs, Collection<Path> includedCodeSourceDir) throws
+            IOException {
+        builder.build(docSourceDirs, includedCodeSourceDir);
         indexDocs = builder.getIndexDocs();
         markupDocs = builder.getMarkupDocs();
+        includedCodeDocs = builder.getIncludedCodeDocs();
         resourceDocs = builder.getResourceDocs();
     }
 
@@ -195,6 +246,13 @@ public class RootProjectDoc {
 
     public IndexDoc getIndexDoc(String container) {
         return indexDocs.get(container);
+    }
+
+    public IncludedCodeDoc getIncludedCodeDoc(String path) {
+        return includedCodeDocs.get(path);
+    }
+    public IncludedCodeDoc[] getIncludedCodeDocs() {
+        return includedCodeDocs.values().toArray(new IncludedCodeDoc[includedCodeDocs.size()]);
     }
 
     public ResourceDoc[] getResourceDocs() {

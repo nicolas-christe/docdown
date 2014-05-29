@@ -16,16 +16,17 @@
  * limitations under the License.
  */
 
+class SampleCode1 {
 
-import com.parrot.docdown.DocdownDoclet;
-
-public class Docdown {
-    static public void main(String[] args) {
-        com.sun.tools.javadoc.Main.execute(new String[]{"-doclet", DocdownDoclet.class.getName(), "-link",
-                "http://docs.oracle.com/javase/7/docs/api/", "-t", "Docdown Doclet", "-d", "build/docdown",
-                "-private",
-                "-sourcepath", "src/main/java", "-docsourcepath", "doc",
-                "-includepath",  "src/sample/java",
-                "-subpackages", "com.parrot.docdown"});
+    public int snippet1() {
+        int value=0;
+        int init = 14;
+        //BEGIN_INCLUDE(sampleid)
+        if (init > 10) {
+            value = init;
+        }
+        //END_INCLUDE(sampleid)
+        return value;
     }
-}
+
+ }

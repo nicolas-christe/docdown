@@ -7,4 +7,5 @@ javadoc \
 -d build/docdown \
 -sourcepath src/main/java \
 -docsourcepath doc \
+-includepath src/sample/java \
 -subpackages com.parrot.docdown

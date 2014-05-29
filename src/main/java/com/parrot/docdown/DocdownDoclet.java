@@ -60,7 +60,8 @@ public class DocdownDoclet extends Doclet {
             rootDoc = root;
 
             // build markup doc content
-            projectDoc = new RootProjectDoc(new RootProjectDoc.Builder(), docdownOption.getSrcDirs());
+            projectDoc = new RootProjectDoc(new RootProjectDoc.Builder(), docdownOption.getSrcDirs(),
+                    docdownOption.getIncludeDirs());
 
             // create the doc store for local classes and add it
             final DocPageStore store = new DocPageStore();

@@ -20,6 +20,7 @@ package com.parrot.docdown.generator.html.pegdown;
 
 import com.parrot.docdown.data.DocReferenceable;
 import com.parrot.docdown.data.markup.MarkupDoc;
+import com.parrot.docdown.data.markup.pegdown.ExternalCodeNode;
 import com.parrot.docdown.data.markup.pegdown.PegdownDoc;
 import com.parrot.docdown.data.page.MarkupPage;
 import com.parrot.docdown.generator.DefaultGenerator;
@@ -118,6 +119,15 @@ public class PegdownContentRenderable extends MarkupContentRenderable {
             }
 
             @Override
+            public void visit(Node node) {
+                if (node instanceof ExternalCodeNode) {
+                    printExternalCode((ExternalCodeNode) node);
+                } else {
+                    super.visit(node);
+                }
+            }
+
+            @Override
             protected void printImageTag(LinkRenderer.Rendering rendering) {
                 if (!rendering.href.equals("#")) {
                     super.printImageTag(rendering);
@@ -125,6 +135,24 @@ public class PegdownContentRenderable extends MarkupContentRenderable {
                     printer.print("<span class=\"error\">");
                     printer.print(rendering.text);
                     printer.print("</span>");
+                }
+            }
+
+            private void printExternalCode(ExternalCodeNode node) {
+                String[] code = generator.getRefLocator().findIncludedCode(node.getFile(), node.getId(),
+                        pegdownDoc.getSourcePosition());
+                if (code != null) {
+                    HtmlCanvas tmpCanvas = new HtmlCanvas();
+                    renderCodeBlock(tmpCanvas, "java", code);
+                    printer.print(tmpCanvas.toHtml());
+                } else {
+                    printer.print("<span class=\"error\">");
+                    printer.print("MISSING REF: " + node.getFile());
+                    if (node.getId()!=null) {
+                        printer.print(":" + node.getId());
+                    }
+                    printer.print("</span><br>");
+
                 }
             }
 
