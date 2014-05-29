@@ -25,15 +25,4 @@ public class ResourceDoc extends BaseDoc {
     public ResourceDoc(Path sourceFilePath) {
         super(sourceFilePath);
     }
-
-    /**
-     * Build the doc name from the source file name
-     *
-     * @return doc name
-     */
-    @Override
-    protected String buildName() {
-        return sourceFilePath.getFileName().toString();
-    }
-
 }

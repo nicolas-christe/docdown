@@ -29,7 +29,7 @@ public abstract class BaseDoc {
 
     public BaseDoc(Path sourceFilePath) {
         this.sourceFilePath = sourceFilePath;
-        this.name = buildName();
+        this.name = sourceFilePath.getFileName().toString();;
 
         Path container = sourceFilePath.subpath(1, sourceFilePath.getNameCount()).getParent();
         if (container != null) {
@@ -45,6 +45,11 @@ public abstract class BaseDoc {
         return name;
     }
 
+    public String getNameBase() {
+        int dotIndex = name.lastIndexOf('.');
+        return (dotIndex == -1) ? name : name.substring(0, dotIndex);
+    }
+
     public String getContainer() {
         return container;
     }
@@ -56,7 +61,5 @@ public abstract class BaseDoc {
     public Path getSourceFilePath() {
         return sourceFilePath;
     }
-
-    protected abstract String buildName();
 
 }

@@ -14,6 +14,6 @@ This is intended as a quick reference and showcase. For more complete info, see
 [Github-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
 
 
-Section [[links]] specify how to link javadoc elements. Section [[samples]] specify how to 
+Section [[links.md]] specify how to link javadoc elements. Section [[samples.md]] specify how to 
 include external sample code in markdown files.
 

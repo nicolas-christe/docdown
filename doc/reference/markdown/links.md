@@ -43,15 +43,15 @@ Example:
 
 ## Links to Markdown pages or other resources
 
-Markdown pages can be referenced with the page file name without extension not ambiguous.
+Markdown pages can be referenced with the page file if not ambiguous.
 
 ```no-highlight
-See [[doc]]
+See [[doc.md]]
 ```
 
 Example:
 
-See [[doc]]
+See [[doc.md]]
 
 
 Reference can be relative to the page directory:
@@ -68,12 +68,12 @@ link to [file in img directory](img/uml.png)
 Use absolute path for other files:
 
 ```no-highlight
-See [[/reference/doc]]
+See [[/reference/doc.md]]
 ```
 
 Example:
 
-See [[/reference/doc]]
+See [[/reference/doc.md]]
 
 
 ## Links to javadoc entries

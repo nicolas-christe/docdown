@@ -104,7 +104,7 @@ public class RootProjectDoc {
                                 if (path.toString().endsWith(".md")) {
                                     // add all .md files as pegdown doc
                                     PegdownDoc markupDoc = new PegdownDoc(path);
-                                    if (markupDoc.getQualifiedName().equals("index")) {
+                                    if (markupDoc.getQualifiedName().equals("index.md")) {
                                         markupDocs.put(null, markupDoc);
                                     } else {
                                         markupDocs.put(markupDoc.getQualifiedName(), markupDoc);
@@ -166,7 +166,7 @@ public class RootProjectDoc {
             // iterate all entries, add corresponding indexes
             for (IndexDoc.Entry entry : index.getContent()) {
                 MarkupDoc target = entry.getTarget();
-                if (target != null && target.getName().equals("index")) {
+                if (target != null && target.getName().equals("index.md")) {
                     loadIndexContent(entry.getTarget(), doc.getContainer());
                 }
             }
@@ -185,15 +185,13 @@ public class RootProjectDoc {
                         String target;
                         String ref = reference;
                         if (ref.endsWith("/")) {
-                            ref += "index";
+                            ref += "index.md";
                         }
                         if (path != null) {
                             target = path + "/" + ref;
                         } else {
                             target = ref;
                         }
-                        int dotIndex = target.lastIndexOf('.');
-                        target = (dotIndex == -1) ? target : target.substring(0, dotIndex);
 
                         MarkupDoc targetDoc = markupDocs.get(target);
                         if (targetDoc != null) {

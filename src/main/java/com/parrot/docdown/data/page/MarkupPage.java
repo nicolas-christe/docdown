@@ -35,9 +35,9 @@ public class MarkupPage implements IDocPage, DocReferenceable {
     public MarkupPage(MarkupDoc markupDoc, Path outputDir) {
         this.markupDoc = markupDoc;
         if (markupDoc.getContainer() != null) {
-            this.destFilePath = outputDir.resolve(markupDoc.getContainer()).resolve(markupDoc.getName() + ".html");
+            this.destFilePath = outputDir.resolve(markupDoc.getContainer()).resolve(markupDoc.getNameBase() + ".html");
         } else {
-            this.destFilePath = outputDir.resolve(markupDoc.getName() + ".html");
+            this.destFilePath = outputDir.resolve(markupDoc.getNameBase() + ".html");
         }
     }
 

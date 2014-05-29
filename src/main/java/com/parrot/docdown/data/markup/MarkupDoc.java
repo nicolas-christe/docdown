@@ -41,18 +41,6 @@ public abstract class MarkupDoc extends BaseDoc {
 
     public abstract String getTitle();
 
-    /**
-     * Build the doc name from the source file name without extension
-     *
-     * @return doc name
-     */
-    @Override
-    protected String buildName() {
-        String fileName = sourceFilePath.getFileName().toString();
-        int dotIndex = fileName.lastIndexOf('.');
-        return (dotIndex == -1) ? fileName : fileName.substring(0, dotIndex);
-    }
-
     public SourcePosition getSourcePosition() {
         return new SourcePosition() {
             @Override

@@ -38,16 +38,6 @@ public class IncludedCodeDoc extends BaseDoc {
         super(sourceFilePath);
     }
 
-    /**
-     * Build the doc name from the source file name
-     *
-     * @return doc name
-     */
-    @Override
-    protected String buildName() {
-        return sourceFilePath.getFileName().toString();
-    }
-
     public String[] getContent(String id) {
         boolean skip = id!=null;
         String begin = BEGIN_INCLUDE + "(" + id + ")";
