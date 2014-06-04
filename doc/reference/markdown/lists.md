@@ -34,6 +34,15 @@ example:
 
 Sub-lists are indented with 4 or more spaces.
 
+```
+1. First ordered list item
+2. Another item
+    * sub-list item
+    * another sub-list item
+        1. sub-sub list item
+4. And another item.
+```
+example:
 
 1. First ordered list item
 2. Another item

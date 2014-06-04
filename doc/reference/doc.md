@@ -39,7 +39,7 @@ File `doc/index.md` :
 ```
 [Overview](overview/)
 [Reference](ref/)
-[Javadoc](javaodc/)
+[Javadoc](javadoc/)
 
 # Root file
 
