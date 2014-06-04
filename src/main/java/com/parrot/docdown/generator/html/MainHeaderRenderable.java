@@ -45,9 +45,11 @@ public class MainHeaderRenderable implements Renderable {
         IDocPage page = PageRenderer.getPage(html);
 
         html.p();
-        for (IndexDoc.Entry entry : mainIndexDoc.getContent()) {
-            DocReferenceable ref = generator.getRefLocator().getMarkupDocRef(entry.getTarget());
-            html.a(href(page.getReferenceTo(ref))).content(entry.getLabel());
+        if (mainIndexDoc != null) {
+            for (IndexDoc.Entry entry : mainIndexDoc.getContent()) {
+                DocReferenceable ref = generator.getRefLocator().getMarkupDocRef(entry.getTarget());
+                html.a(href(page.getReferenceTo(ref))).content(entry.getLabel());
+            }
         }
         html._p();
     }

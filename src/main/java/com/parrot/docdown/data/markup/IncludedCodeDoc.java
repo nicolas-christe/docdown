@@ -34,8 +34,8 @@ public class IncludedCodeDoc extends BaseDoc {
     private static final String BEGIN_INCLUDE = "BEGIN_INCLUDE";
     private static final String END_INCLUDE = "END_INCLUDE";
 
-    public IncludedCodeDoc(Path sourceFilePath) {
-        super(sourceFilePath);
+    public IncludedCodeDoc(Path sourceFilePath, Path basePath) {
+        super(sourceFilePath, basePath);
     }
 
     public String[] getContent(String id) {

@@ -22,7 +22,7 @@ import java.nio.file.Path;
 
 public class ResourceDoc extends BaseDoc {
 
-    public ResourceDoc(Path sourceFilePath) {
-        super(sourceFilePath);
+    public ResourceDoc(Path sourceFilePath, Path basePath) {
+        super(sourceFilePath, basePath);
     }
 }

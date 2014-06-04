@@ -27,13 +27,13 @@ public abstract class BaseDoc {
     protected final String name;
     protected final String qualifiedName;
 
-    public BaseDoc(Path sourceFilePath) {
-        this.sourceFilePath = sourceFilePath;
-        this.name = sourceFilePath.getFileName().toString();;
+    public BaseDoc(Path sourceFilePath, Path basePath) {
+        this.sourceFilePath = sourceFilePath.toAbsolutePath();
+        this.name = sourceFilePath.getFileName().toString();
 
-        Path container = sourceFilePath.subpath(1, sourceFilePath.getNameCount()).getParent();
-        if (container != null) {
-            this.container = container.toString();
+        String container = basePath.relativize(sourceFilePath.getParent()).toString();
+        if (!container.isEmpty()) {
+            this.container = container;
             this.qualifiedName = this.container + "/" + this.name;
         } else {
             this.container = null;

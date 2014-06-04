@@ -79,15 +79,17 @@ public class RootProjectDoc {
             if (includedCodeSourceDir != null) {
                 loadIncludedCodeFileLists(includedCodeSourceDir);
             }
+            processMarkupFiles();
             if (markupDocs.get(null) != null) {
-                processMarkupFiles();
                 loadIndexes();
+            } else {
+                DocdownDoclet.getErrorReporter().printError("Missing require root index.md file");
             }
         }
 
         private void loadSourceFileLists(Collection<Path> srcDirs) throws IOException {
             // build a list of all .md files in source paths
-            for (Path sourcePath : srcDirs) {
+            for (final Path sourcePath : srcDirs) {
                 if (Files.exists(sourcePath)) {
                     Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
                         @Override
@@ -103,7 +105,7 @@ public class RootProjectDoc {
                             if (!Files.isHidden(path)) {
                                 if (path.toString().endsWith(".md")) {
                                     // add all .md files as pegdown doc
-                                    PegdownDoc markupDoc = new PegdownDoc(path);
+                                    PegdownDoc markupDoc = new PegdownDoc(path, sourcePath);
                                     if (markupDoc.getQualifiedName().equals("index.md")) {
                                         markupDocs.put(null, markupDoc);
                                     } else {
@@ -111,7 +113,7 @@ public class RootProjectDoc {
                                     }
                                 } else {
                                     // add all other files as resource doc
-                                    ResourceDoc resourceDoc = new ResourceDoc(path);
+                                    ResourceDoc resourceDoc = new ResourceDoc(path, sourcePath);
                                     resourceDocs.put(resourceDoc.getQualifiedName(), resourceDoc);
                                 }
                             }
@@ -124,7 +126,7 @@ public class RootProjectDoc {
 
         private void loadIncludedCodeFileLists(Collection<Path> srcDirs) throws IOException {
             // build a list of allfiles  in included source code paths
-            for (Path sourcePath : srcDirs) {
+            for (final Path sourcePath : srcDirs) {
                 if (Files.exists(sourcePath)) {
                     Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
                         @Override
@@ -138,7 +140,7 @@ public class RootProjectDoc {
                         public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
                             // skip all hiddenList<Path> files
                             if (!Files.isHidden(path)) {
-                                IncludedCodeDoc doc = new IncludedCodeDoc(path);
+                                IncludedCodeDoc doc = new IncludedCodeDoc(path, sourcePath);
                                 includedCodeDocs.put(doc.getQualifiedName(), doc);
 
                             }

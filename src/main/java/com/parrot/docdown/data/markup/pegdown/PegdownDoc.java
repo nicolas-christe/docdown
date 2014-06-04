@@ -40,8 +40,8 @@ public class PegdownDoc extends MarkupDoc {
     private RootNode rootNode;
     private String title;
 
-    public PegdownDoc(Path sourceFilePath) {
-        super(sourceFilePath);
+    public PegdownDoc(Path sourceFilePath, Path sourcePath) {
+        super(sourceFilePath, sourcePath);
     }
 
     @Override

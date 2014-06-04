@@ -31,8 +31,8 @@ public abstract class MarkupDoc extends BaseDoc {
         void processRef(String text, String reference);
     }
 
-    public MarkupDoc(Path sourceFilePath) {
-        super(sourceFilePath);
+    public MarkupDoc(Path sourceFilePath, Path sourcePath) {
+        super(sourceFilePath, sourcePath);
     }
 
     public abstract void processMarkup() throws IOException;
