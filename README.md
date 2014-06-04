@@ -26,8 +26,7 @@ Docdown doclet is released under the [Apache License Version 2.0](http://www.apa
 
 [Binary releases](http://github.com/nicolaschriste/nicolaschriste.github.io/tree/master/releases/docdown )
 
-The latest release is v0.2.0 and is a work in progress.
-
+The latest release is v0.2.1 and is a work in progress.
 
 ## Documentation
 
