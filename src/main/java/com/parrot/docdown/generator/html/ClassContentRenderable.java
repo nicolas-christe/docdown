@@ -166,6 +166,7 @@ public class ClassContentRenderable extends PageContentRenderable {
                 DocReferenceable referenceable = generator.getRefLocator().getFieldDocRef(fieldDoc);
                 html.a(href(PageRenderer.getPage(html).getReferenceTo(referenceable))).content(fieldDoc.name(),
                         HtmlCanvas.NO_ESCAPE);
+                html.write(fieldDoc.type().dimension());
             }
             html._td();
             tableRenderer.closeRow(html);
@@ -369,6 +370,7 @@ public class ClassContentRenderable extends PageContentRenderable {
             Parameter param = params[i];
             html.render(new ClassNameRenderable(generator, param.type(), ClassNameRenderable.LINK));
             html.write(' ').write(param.name());
+            html.write(param.type().dimension());
         }
         html.write(')');
     }
