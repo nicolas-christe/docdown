@@ -29,6 +29,7 @@ import org.rendersnake.Renderable;
 
 import java.io.IOException;
 
+import static org.rendersnake.HtmlAttributesFactory.charset;
 import static org.rendersnake.HtmlAttributesFactory.id;
 
 public class PageRenderable implements Renderable {
@@ -59,6 +60,7 @@ public class PageRenderable implements Renderable {
         // write header
         html.head();
         html.title().content(page.getTitle());
+        html.meta(charset("utf-8"));
         html.macros().javascript(assertRelDir + "jquery-1.10.2.js");
         html.macros().javascript(assertRelDir + "jquery-ui-1.10.4.js");
         html.macros().javascript(assertRelDir + "highlight.js");
