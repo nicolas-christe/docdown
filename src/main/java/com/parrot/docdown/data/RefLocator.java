@@ -309,8 +309,17 @@ public class RefLocator extends RefProvider {
                 }
                 // check methods
                 for (MethodDoc methodDoc : classDoc.methods()) {
-                    if (member.equals(methodDoc.name()) || member.equals(methodDoc.name() + methodDoc.signature()) ||
-                            member.equals(methodDoc.name() + methodDoc.flatSignature())) {
+                    // check simple class name
+                    boolean match = member.equals(methodDoc.name());
+                    // match the qualified signature
+                    match = match | member.equals(methodDoc.name() + methodDoc.signature());
+                    // match the qualified signature without spaces
+                    match = match | member.equals(methodDoc.name() + methodDoc.signature().replaceAll("\\s",""));
+                    // match the flat signature
+                    match = match | member.equals(methodDoc.name() + methodDoc.flatSignature());
+                    // match the flat signature without spaces
+                    match = match | member.equals(methodDoc.name() + methodDoc.flatSignature().replaceAll("\\s",""));
+                   if (match) {
                         matches.add(getExecutableMemberDocRef(methodDoc));
                     }
                 }

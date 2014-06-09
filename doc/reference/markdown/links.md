@@ -2,7 +2,7 @@
 
 Links can have 3 forms:
 
-### Normal link:
+### Inline link:
  
 ```
 [github](http://www.github.com)
@@ -136,21 +136,60 @@ Class methods are referenced using the class name reference, followed by # and t
 if not ambiguous:
 
 ```no-highlight
-method [[DocdownOption#optionLength]]
+method [[DocdownOption#validOptions]]
 ```
 
 Example:
 
-method [[DocdownOption#optionLength]]
+method [[DocdownDoclet#validOptions]]
 
 
-If ambiguous, the method parameters type can be specified:
+If ambiguous, the method parameters type can be specified, either unqualified
+```no-highlight
+method [[DocdownOption#validOptions(String[][], DocErrorReporter)]]]
+```
+
+Example:
+
+method [[DocdownDoclet#validOptions(String[][], DocErrorReporter)]]]
+
+or fully qualified
 
 ```no-highlight
-method [[DocdownOption#optionLength(String)]]
+method [[DocdownOption#validOptions(java.lang.String[][], com.sun.javadoc.DocErrorReporter)]]]
 ```
 
 Example:
 
-method [[DocdownOption#optionLength(String)]]
+method [[DocdownDoclet#validOptions(java.lang.String[][], com.sun.javadoc.DocErrorReporter)]]]
 
+
+**Note**:
+
+Due to limitation in the markdown parser, inline links to methods are not recognizes as links if they contains spaces or
+parenthesis. To create a inline link to a method while specifying its parameters, parenthesis must be escaped 
+with `\` and parameters **must not** be separated by spaces:
+
+```no-highlight
+method [validOptions](DocdownDoclet#validOptions\(String[][],DocErrorReporter\))
+```
+
+Example:
+
+method [validOptions](DocdownDoclet#validOptions\(String[][],DocErrorReporter\))
+
+Parenthesis escape are not require for reference links, but as in inline links parameters **must not** be separated by 
+spaces:
+
+
+```no-highlight
+method [validOptions][](DocdownDoclet#validOptions\(String[][],DocErrorReporter\))
+
+[validOptions]: DocdownDoclet#validOptions(String[][],DocErrorReporter)
+```
+
+Example:
+
+method [validOptions][]
+
+[validOptions]: DocdownDoclet#validOptions(String[][],DocErrorReporter)
