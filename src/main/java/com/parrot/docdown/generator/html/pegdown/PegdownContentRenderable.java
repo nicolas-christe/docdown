@@ -80,6 +80,28 @@ public class PegdownContentRenderable extends MarkupContentRenderable {
                 return getRendering(node.getText(), null);
             }
 
+            @Override
+            public Rendering render(ExpImageNode node, String text) {
+                try {
+                    if (new URI(node.url).isAbsolute()) {
+                        return super.render(node, text);
+                    }
+                } catch (URISyntaxException e) {
+                }
+                return getRendering(node.url, text);
+            }
+
+            @Override
+            public Rendering render(RefImageNode node, String url, String title, String alt) {
+                try {
+                    if (new URI(url).isAbsolute()) {
+                        return super.render(node, url, title, alt);
+                    }
+                } catch (URISyntaxException e) {
+                }
+                return getRendering(url, title);
+            }
+
             private Rendering getRendering(String url, String text) {
                 DocReferenceable ref = generator.getRefLocator().find(url, pegdownDoc.getSourcePosition(),
                         pegdownDoc.getContainer());
