@@ -57,7 +57,8 @@ public class ApiPageRef implements DocReferenceable {
     }
 
     public ApiPageRef(ExecutableMemberDoc executableMemberDoc, ApiPage apiPage) {
-        this.name = executableMemberDoc.containingClass().name() + "." + executableMemberDoc.name() + "()";
+        this.name = executableMemberDoc.containingClass().name() + '.' + executableMemberDoc.name() +
+                executableMemberDoc.flatSignature();
         this.qualifiedName = executableMemberDoc.containingClass().qualifiedName() + "#" + executableMemberDoc.name() +
                 executableMemberDoc.signature();
         this.apiPage = apiPage;
