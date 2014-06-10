@@ -158,7 +158,7 @@ public class ClassContentRenderable extends PageContentRenderable {
             html.td().write("from ").render(new ClassNameRenderable(generator, inheritedFields.getClassType(),
                     ClassNameRenderable.LINK))._td();
             html.td();
-            for (int i = 0; i < fields.size(); i++) {
+            for (int i = 0; i < inheritedFields.getFields().size(); i++) {
                 if (i > 0) {
                     html.write(", ");
                 }
