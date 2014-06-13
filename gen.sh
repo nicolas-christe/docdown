@@ -1,4 +1,4 @@
-javadoc \
+/usr/lib/jvm/java-7-openjdk-amd64/bin/javadoc \
 -doclet com.parrot.docdown.DocdownDoclet \
 -docletpath build/libs/docdown.jar \
 -link http://docs.oracle.com/javase/7/docs/api/ \

@@ -291,6 +291,13 @@ public class RefLocator extends RefProvider {
                         matches.add(getFieldDocRef(fieldDoc));
                     }
                 }
+                // check enum values
+                for (FieldDoc fieldDoc : classDoc.enumConstants()) {
+                    if (member.equals(fieldDoc.name())) {
+                        matches.add(getFieldDocRef(fieldDoc));
+                    }
+                }
+
             }
         }
     }

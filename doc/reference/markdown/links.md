@@ -128,7 +128,7 @@ Example:
 
 field [[DocdownOption#title]]
 
-
+Enum values are referenced like fields.
 
 ### Class methods
 
@@ -163,6 +163,7 @@ Example:
 
 method [[DocdownDoclet#validOptions(java.lang.String[][], com.sun.javadoc.DocErrorReporter)]]]
 
+Inner classes must always be qualified with the outer class name.
 
 **Note**:
 
