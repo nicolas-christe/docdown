@@ -181,8 +181,12 @@ public class RefLocator extends RefProvider {
      */
     private ResourceDoc findResourceFile(String resourceFilePath, String markupDocContainer) {
         // relative path
-        if (!resourceFilePath.startsWith("/") && markupDocContainer != null) {
-            return projectRootDoc.getResourceDoc(markupDocContainer + "/" + resourceFilePath);
+        if (!resourceFilePath.startsWith("/")) {
+            if (markupDocContainer != null) {
+                return projectRootDoc.getResourceDoc(markupDocContainer + "/" + resourceFilePath);
+            } else {
+                return projectRootDoc.getResourceDoc(resourceFilePath);
+            }
         }
         // absolute path
         return projectRootDoc.getResourceDoc(resourceFilePath.substring(1));
