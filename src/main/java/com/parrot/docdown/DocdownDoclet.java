@@ -29,15 +29,23 @@ import com.sun.javadoc.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Properties;
 
 /**
  * Doclet entry point
  */
 public class DocdownDoclet extends Doclet {
 
+    /** Docdown verison string */
+    public static final String version=loadVersion();
+
+    /** Options */
     private static DocdownOption docdownOption = new DocdownOption();
+    /** Root markup and resources doc */
     private static RootProjectDoc projectDoc;
+    /** Root of javavadoc  */
     private static RootDoc rootDoc;
+
 
     /**
      * Gets the error reporter
@@ -162,4 +170,15 @@ public class DocdownDoclet extends Doclet {
     public static boolean validOptions(String options[][], DocErrorReporter reporter) {
         return docdownOption.parseOptions(options, reporter);
     }
+
+    private static String loadVersion() {
+        try {
+            Properties props = new Properties();
+            props.load( DocdownDoclet.class.getClassLoader().getResourceAsStream("gradle.properties"));
+            return (String) props.get("version");
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
 }
