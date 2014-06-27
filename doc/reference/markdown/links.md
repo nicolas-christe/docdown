@@ -97,20 +97,20 @@ Example:
 
 Reference to a class is done using the simple class name if not ambiguous:
 
-```
-package [[DocdownOption]]
+```no-highlight
+class [[DocdownOption]]
 ```
 
 Example:
 
-package [[DocdownOption]]
+class [[DocdownOption]]
+
+```no-highlight
+class [[com.parrot.docdown.DocdownOption]]
+```
 
 Reference to a class can also be done using the full qualified class name:
 
-
-```
-class [[com.parrot.docdown.DocdownOption]]
-```
 
 Example:
 
