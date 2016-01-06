@@ -38,7 +38,7 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     provided files("${System.properties['java.home']}/../lib/tools.jar")
-    compile "org.rendersnake:rendersnake:1.7.3"
+    compile "org.rendersnake:rendersnake:1.8"
     // uses local patched version of pegdown-1.4.2
     compile "org.parboiled:parboiled-java:1.1.6"
     compile fileTree(dir: 'libs', include: ['*.jar'])
